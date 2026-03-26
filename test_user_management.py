@@ -35,11 +35,19 @@ class TestUserManagement(unittest.TestCase):
             create_user("Example", "example@domain.com",
                         "weak", "1990-01-01")
 
-    def test_get_list_delete(self):
+    def test_get_user_after_create(self):
         user = create_user("Example", "example@domain.com",
                            "StrongP@ssw0rd", "1990-01-01")
         self.assertEqual(get_user(user["id"])["email"], "example@domain.com")
+
+    def test_list_users_after_create(self):
+        create_user("Example", "example@domain.com",
+                    "StrongP@ssw0rd", "1990-01-01")
         self.assertEqual(len(list_users()), 1)
+
+    def test_delete_user(self):
+        user = create_user("Example", "example@domain.com",
+                           "StrongP@ssw0rd", "1990-01-01")
         self.assertTrue(delete_user(user["id"]))
         self.assertIsNone(get_user(user["id"]))
 
